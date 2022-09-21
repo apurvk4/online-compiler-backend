@@ -1,0 +1,8 @@
+/node_modules
+*.py
+*.c
+*.cpp
+*.java
+input.txt
+a.out
+*.class
