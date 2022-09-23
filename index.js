@@ -43,11 +43,12 @@ app.post("/code", async (req, res) => {
     case "cpp":
       ext = "cpp";
       break;
-    case "python":
+    case "python3":
       ext = "py";
       break;
     case "java":
       ext = "java";
+      break;
     default:
       res.status(404);
       res.send({
@@ -90,6 +91,7 @@ app.post("/code", async (req, res) => {
         }else{
           snippet = "javac code.java && java code";
         }
+        break;
       default:
         res.status(404);
         res.send({
