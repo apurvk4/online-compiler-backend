@@ -50,7 +50,7 @@ app.post("/code", async (req, res) => {
       ext = "java";
       break;
     default:
-      res.status(404);
+      res.status(200);
       res.send({
         status:404,
         result: "unrecognized code language"
@@ -93,7 +93,7 @@ app.post("/code", async (req, res) => {
         }
         break;
       default:
-        res.status(404);
+        res.status(200);
         res.send({
           status:404,
           result: "unrecognized code language"
@@ -105,7 +105,7 @@ app.post("/code", async (req, res) => {
     res.send(codeResult);
   } catch (err) {
     console.log(err);
-    res.status(404);
+    res.status(200);
     res.send({
       status: 404,
       result: err.stderr,
