@@ -4,7 +4,7 @@ const express = require("express");
 const { json } = require("body-parser");
 const fs = require("fs").promises;
 const app = express();
-const port  =  5000;
+const port  =  process.env.PORT|| 5000;
 app.use(json());
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -111,5 +111,5 @@ app.post("/code", async (req, res) => {
   }
 });
 app.listen(port, () => {
-  console.log("listening on http://localhost:5000");
+  console.log(`listening on http://localhost:${port}`);
 });
