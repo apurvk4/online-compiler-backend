@@ -45,6 +45,16 @@ app.post("/code", async (req, res) => {
       break;
     case "python":
       ext = "py";
+      break;
+    case "java":
+      ext = "java";
+    default:
+      res.status(404);
+      res.send({
+        status:404,
+        result: "unrecognized code language"
+      })
+      return;
   }
   try {
     let err = await fs.writeFile("code." + ext, code);
@@ -74,15 +84,28 @@ app.post("/code", async (req, res) => {
           snippet = "python3 code.py";
         }
         break;
+      case "java":
+        if(inp){
+          snippet = "javac code.java && java code < input.txt";
+        }else{
+          snippet = "javac code.java && java code";
+        }
+      default:
+        res.status(404);
+        res.send({
+          status:404,
+          result: "unrecognized code language"
+        })
+        return;
     }
     let codeResult = await runCode(snippet);
     res.status(200);
     res.send(codeResult);
   } catch (err) {
     console.log(err);
-    res.status(200);
+    res.status(404);
     res.send({
-      status: 400,
+      status: 404,
       result: err.stderr,
     });
   }
