@@ -7,7 +7,7 @@ const app = express();
 const port  =  process.env.PORT|| 5000;
 app.use(json());
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://apurvk4.github.io");
+  res.setHeader("Access-Control-Allow-Origin", "https://online-compiler-frontend-jk9ztpe92-apurvk4.vercel.app/");
   res.removeHeader("X-powered-by");
   res.setHeader("Access-Control-Allow-Methods", "POST");
   // res.setHeader("Access-Control-Allow-Credentials", "true");
