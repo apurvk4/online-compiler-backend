@@ -19,7 +19,7 @@ app.use((req, res, next) => {
     res.status(200);
     res.end();
   } else {
-    console.log(req.headers.origin);
+    console.log(req.get("host"));
     const origin = req.protocol + "://" + req.headers.host;
     console.log(origin);
     if (origin !== "https://online-compiler-frontend-ivory.vercel.app") {
@@ -27,7 +27,8 @@ app.use((req, res, next) => {
       res.send({
         message: "unauthorized user",
         origin,
-        headers: req.header.origin,
+        headers: req.get("host"),
+        protocol: req.protocol,
       });
       res.end();
     } else {
