@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 /*{
   language : string,
   code : string,
-  input: string,
+  input: string
 }*/
 async function runCode(snippet) {
   const { stdout, stderr } = await exec(snippet);
