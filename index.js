@@ -16,7 +16,7 @@ app.use((req, res, next) => {
     res.status(200);
     res.end();
   } else {
-    if (req.body.id !== process.env.UNIQUE_ID) {
+    if (!req.body.id || req.body.id !== process.env.UNIQUE_ID) {
       res.status(401);
       res.send({ message: "unauthorized user" });
       res.end();
