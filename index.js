@@ -24,7 +24,11 @@ app.use((req, res, next) => {
     console.log(origin);
     if (origin !== "https://online-compiler-frontend-ivory.vercel.app") {
       res.status(401);
-      res.send({ message: "unauthorized user" });
+      res.send({
+        message: "unauthorized user",
+        origin,
+        headers: req.header.origin,
+      });
       res.end();
     } else {
       next();
