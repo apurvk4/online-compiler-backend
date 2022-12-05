@@ -7,7 +7,10 @@ const app = express();
 const port  =  process.env.PORT|| 5000;
 app.use(json());
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://online-compiler-frontend-ivory.vercel.app"
+  );
   res.removeHeader("X-powered-by");
   res.setHeader("Access-Control-Allow-Methods", "POST");
   // res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -16,7 +19,8 @@ app.use((req, res, next) => {
     res.status(200);
     res.end();
   } else {
-    if (!req.body.id || req.body.id !== process.env.UNIQUE_ID) {
+    const origin = req.protocol + "://" + req.headers.host + req.path;
+    if (origin !== "https://online-compiler-frontend-ivory.vercel.app/code") {
       res.status(401);
       res.send({ message: "unauthorized user" });
       res.end();
