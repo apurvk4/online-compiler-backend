@@ -28,11 +28,15 @@ app.use((req, res, next) => {
   input: string
 }*/
 async function runCode(snippet) {
-  const { stdout, stderr } = await exec(snippet);
+try {
+  const { stdout, stderr } = await exec(snippet, { timeout: 2000 });
   if (stderr != "") {
     return { status: 404, result: stderr };
   }
   return { status: 200, result: stdout };
+} catch (err) {
+  return { status: 404, result: err.message };
+}
 }
 app.post("/code", async (req, res) => {
   lang = req.body.language;
