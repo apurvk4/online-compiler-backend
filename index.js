@@ -1,5 +1,5 @@
 const util = require("node:util");
-const exec = util.promisify(require("node:child_process").exec);
+const { exec } = require("node:child_process");
 const express = require("express");
 const { json } = require("body-parser");
 const fs = require("fs").promises;
@@ -27,9 +27,24 @@ app.use((req, res, next) => {
   code : string,
   input: string
 }*/
+function promisify(snippet) {
+  return new Promise((resolve, reject) => {
+    exec(snippet, { timeout: 2000 }, (error, stdout, stderr) => {
+      if (error) {
+        return reject(
+          `${error.name} ` + `${error.signal}` + "\n" + error.message
+        );
+      }
+      if (stderr != "") {
+        return resolve({ stderr, stdout });
+      }
+      return resolve({ stderr, stdout });
+    });
+  });
+}
 async function runCode(snippet) {
 try {
-  const { stdout, stderr } = await exec(snippet, { timeout: 2000 });
+  const { stdout, stderr } = await promisify(snippet);
   if (stderr != "") {
     return { status: 404, result: stderr };
   }
