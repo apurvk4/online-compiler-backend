@@ -31,8 +31,18 @@ function promisify(snippet) {
   return new Promise((resolve, reject) => {
     exec(snippet, { timeout: 2000 }, (error, stdout, stderr) => {
       if (error) {
+        if (stderr != "") {
+          return reject(
+            `${error.signal ? "signal" + error.signal : ""}\n ${
+              error.name
+            } \n ${stderr}`
+          );
+        }
         return reject(
-          `${error.name} ` + `${error.signal}` + "\n" + error.message
+          `${error.name} \n` +
+            `${error.signal ? "signal" + error.signal : ""}` +
+            "\n" +
+            error.message
         );
       }
       if (stderr != "") {
@@ -50,7 +60,7 @@ try {
   }
   return { status: 200, result: stdout };
 } catch (err) {
-  return { status: 404, result: err.message };
+  return { status: 404, result: err };
 }
 }
 app.post("/code", async (req, res) => {
